@@ -1,0 +1,2 @@
+include ':app', ':advertissdk'
+rootProject.name='GGDemo'
