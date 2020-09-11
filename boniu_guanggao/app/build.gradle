@@ -4,16 +4,48 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.boniu.ggdemo"
+        applicationId "com.jisuanqi.xiaodong"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file('yuyinjisuanqi')
+            storePassword "yuyinjisuanqi"
+            keyAlias "yuyinjisuanqi"
+            keyPassword "yuyinjisuanqi"
+        }
+
+        debug {
+            storeFile file('yuyinjisuanqi')
+            storePassword "yuyinjisuanqi"
+            keyAlias "yuyinjisuanqi"
+            keyPassword "yuyinjisuanqi"
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            applicationIdSuffix '.debug'
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,5 +58,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation project(path: ':advertissdk')
+    implementation 'com.boniu.ad:gdtsdk:4.251.1121@aar'
+    implementation 'com.boniu.ad:csjsdk:3.1.0.0@aar'
+    implementation project(path: ':adsdk')
 }

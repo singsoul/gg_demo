@@ -1,2 +1,2 @@
-include ':app', ':advertissdk'
+include ':app', ':ad', ':adsdk'
 rootProject.name='GGDemo'
