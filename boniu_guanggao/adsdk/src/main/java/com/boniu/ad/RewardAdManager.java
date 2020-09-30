@@ -327,7 +327,6 @@ public class RewardAdManager {
             if (list == null  || list.size() <= 0){
                 errorMsg = "直客激励视频为空";
                 SplashConfig.splashSave(ZHIKE_APP_ID,ZHIKE_POS_ID,errorMsg,  ConfigKeys.EMPTY_SPLASH+"","1");
-
                 showRewardad();
             }else{
                 MeterialBean meterialBean = list.get(0);

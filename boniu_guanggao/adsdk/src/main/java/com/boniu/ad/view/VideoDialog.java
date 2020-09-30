@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ import com.boniu.ad.R;
 import com.boniu.ad.RewardAdManager;
 import com.boniu.ad.bean.MeterialBean;
 import com.boniu.ad.download.UpdateService;
+import com.boniu.ad.statusbar.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -56,19 +58,40 @@ public class VideoDialog extends Dialog {
     }
 
     @Override
+    public void show() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        );
+        super.show();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_video);
-        //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        //一定要在setContentView之后调用，否则无效
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        Window window = getWindow();
+//        //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
+////        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        //一定要在setContentView之后调用，否则无效
+//        // 隐藏状态栏不占位
+//        window.setFlags(
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initView();
         videoView.setZOrderOnTop(true);
         videoView.setZOrderMediaOverlay(true);
-//        Uri uri=Uri.parse(meterialBean.getLineMate().get(0));
         Uri uri = Uri.parse(meterialBean.getLineMate().get(0));
         videoView.setVideoURI(uri);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

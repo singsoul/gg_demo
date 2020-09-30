@@ -76,6 +76,12 @@ public class SplashAdManager {
 
     }
 
+    /**
+     *
+     * @param activity
+     * @param container  广告显示的布局
+     * @param startNext
+     */
     public void ShowSplashAd(Activity activity, ViewGroup container, IStartNext startNext) {
         this.startNext = startNext;
         this.activity = activity;

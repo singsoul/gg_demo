@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick: init" );
                 new RewardAdManager().ShowSplashAd(MainActivity.this,new RewardAdManager.RewardAdManagerListener() {
                     @Override
                     public void rewardVideAdComplete() {
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void rewardError(String msg) {
                         //错误
+                        Log.e(TAG, "rewardError: " + msg);
                     }
                 });
             }

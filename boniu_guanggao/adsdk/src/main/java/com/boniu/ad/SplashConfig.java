@@ -30,6 +30,13 @@ import retrofit2.Call;
 public class SplashConfig {
     public static final String TAG = "SplashConfig";
     private static Gson gson = new Gson();
+
+    /**
+     *
+     * @param context
+     * @param packageNmae 包名
+     * @param appName appname
+     */
     public static void init(final Context context, String packageNmae,String appName){
         SplashSingleton.getInstance().setContext(context);
         SplashSingleton.getInstance().setAppName(appName);
@@ -125,7 +132,6 @@ public class SplashConfig {
                     @Override
                     public void onLoadSuccess(Call<ResultBean> call, ResultBean result) {
                         String decrypt = AESUtil.decrypt(result.result, ConfigKeys.AES_KEY);
-                        Log.e(TAG, "onLoadSuccess: " + decrypt );
                         if (TextUtils.isEmpty(decrypt)){
                             meterialInterfaces.onError("数据为空");
                         }else{
@@ -138,7 +144,7 @@ public class SplashConfig {
 
                     @Override
                     public void onLoadError(String errorMsg) {
-                        Log.e(TAG, "onLoadError: " + errorMsg );
+                        Log.e(TAG, "onLoadError1: " + errorMsg );
                         meterialInterfaces.onError(errorMsg);
                     }
                 });

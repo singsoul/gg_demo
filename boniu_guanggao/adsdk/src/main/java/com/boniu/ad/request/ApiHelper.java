@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 public class ApiHelper {
     private static final String TAG = ApiHelper.class.getSimpleName();
 
-    public static final String BASE_URI = "http://ad.test.rhinox.cn/";
+    public static final String BASE_URI = "https://ad.rhinox.cn/";
     public static final String ADVERTISEMRNT_LIST = BASE_URI + "client/sdk/getData";
     public static final String GET_METERIAL = BASE_URI + "client/sdk/getMaterial";
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.boniu.ad.SplashAdManager;
@@ -42,7 +43,8 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onerror(String msg) {
-
+            Log.e("MainActivity", "onerror: " + msg );
+            gotoNext();
         }
 
     };
