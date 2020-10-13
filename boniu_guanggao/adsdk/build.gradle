@@ -42,19 +42,3 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
 }
-uploadArchives { //新增 ，因为Android Studio gradle 支持maven插件，所以可以添加此task
-    repositories {
-        mavenDeployer {
-            repository(url: 'http://192.168.10.223:8081/repository/maven-3rd/') {
-                authentication(userName: 'admin', password: 'admin123')
-            }
-            pom.project {
-                version '1.0.3' //版本名称
-                artifactId 'adsdk'  //和前面网站上填写的一样
-                groupId 'com.boniu.ad'  //和前面网站上填写的一样
-                packaging 'aar' //填写aar
-                description '基本完成' //更新描述
-            }
-        }
-    }
-}
