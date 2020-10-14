@@ -1,4 +1,4 @@
-package com.jisuanqi.xiaodong;
+package com.treefinance.gongfudai;
 
 import android.app.Activity;
 import android.app.Application;
@@ -20,7 +20,7 @@ public class App extends Application {
         super.onCreate();
         app = this;
 
-        SplashConfig.init(app,"com.jisuanqi.xiaodong","计算器");
+        SplashConfig.init(app,"com.treefinance.gongfudai","计算器");
 //        this.registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
 
     }

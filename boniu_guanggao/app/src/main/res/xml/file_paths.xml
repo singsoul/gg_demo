@@ -10,7 +10,7 @@
 
     <external-path
         name="root_path"
-        path="Android/data/com.jisuanqi.xiaodong" />
+        path="Android/data/com.treefinance.gongfudai" />
 
     <external-files-path
         name="external_file_path"

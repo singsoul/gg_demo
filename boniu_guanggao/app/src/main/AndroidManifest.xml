@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jisuanqi.xiaodong">
+    package="com.treefinance.gongfudai">
 
     <!-- 必要权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.jisuanqi.xiaodong.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,14 +27,14 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.jisuanqi.xiaodong.SplashActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.jisuanqi.xiaodong.MainActivity">
+        <activity android:name=".MainActivity">
 
         </activity>
 
