@@ -31,6 +31,7 @@ import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,12 +83,12 @@ public class SplashAdManager {
      * @param container  广告显示的布局
      * @param startNext
      */
-    public void ShowSplashAd(Activity activity, ViewGroup container, IStartNext startNext) {
+    public void ShowSplashAd(Activity activity, ViewGroup container, IStartNext startNext,String adIdentity) {
         this.startNext = startNext;
         this.activity = activity;
         this.container = container;
         this.sharedPreferences = activity.getSharedPreferences("privacy", MODE_PRIVATE);
-        List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> splashList = SplashSingleton.getInstance().getSplashList(0);
+        List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> splashList = SplashSingleton.getInstance().getSplashList(0,adIdentity);
         if (splashList == null){
             startNext.onerror("暂无开屏广告");
             return;
@@ -299,29 +300,33 @@ public class SplashAdManager {
 
 
     private void loadZhiKeSplashAd(){
+        gotoNext = true;
         SplashConfig.getMaterial(ZHIKE_APP_ID,ZHIKE_POS_ID,meterialInterfaces);
 
 
     }
-
+    private boolean gotoNext = true;
+    CountDownTimer timer;
     private MeterialInterfaces meterialInterfaces = new MeterialInterfaces() {
         @Override
         public void meterialList(List<MeterialBean> list) {
             if (list != null && list.size() > 0){
-                final MeterialBean meterialBean = list.get(0);
+                int i = new Random().nextInt(list.size() - 1);
+                final MeterialBean meterialBean = list.get(i);
                 View skipLayout = LayoutInflater.from(activity).inflate(R.layout.framelayout_meterial_open, null);
                 container.addView(skipLayout);
                 ImageView imgBg =  skipLayout.findViewById(R.id.img_bg);
                 final TextView tvTiaoguo = skipLayout.findViewById(R.id.tv_tiaoguo);
                 Glide.with(activity).load(meterialBean.getLineMate().get(0)).into(imgBg);
-                CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                timer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTiaoguo.setText("跳过" + millisUntilFinished / 1000);
                     }
                     public void onFinish() {
-                        SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
-
-                        startNext.startNext();
+                        if (gotoNext){
+                            SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
+                            startNext.startNext();
+                        }
                     }
                 };
                 //调用 CountDownTimer 对象的 start() 方法开始倒计时，也不涉及到线程处理
@@ -353,7 +358,14 @@ public class SplashAdManager {
                 tvTiaoguo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        gotoNext = false;
+                        if (timer != null) {
+                            timer.cancel();
+                            timer = null;
+                        }
+                        SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
                         startNext.startNext();
+
                     }
                 });
             }else{

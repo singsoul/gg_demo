@@ -174,6 +174,7 @@ public class SplashConfig {
         jsonObject.addProperty("resType",resType + "");
         jsonObject.addProperty("status",status + "");
         jsonObject.addProperty("platform","ANDROID");
+        Log.e(TAG, "splashSave: " + jsonObject.toString() );
         String encrypt = AESUtil.encrypt(jsonObject.toString(), ConfigKeys.AES_KEY);
         ApiManager.getInstance().create(AuthApi.class).logSave(
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),encrypt+""))

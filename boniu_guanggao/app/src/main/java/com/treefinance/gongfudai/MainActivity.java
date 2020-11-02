@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         //错误
                         Log.e(TAG, "rewardError: " + msg);
                     }
-                });
+                },"7d27d0fb53134208b67400441e922ed7");
             }
         });
 

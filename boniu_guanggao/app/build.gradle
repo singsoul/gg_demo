@@ -25,7 +25,6 @@ android {
             keyAlias "yuyinjisuanqi"
             keyPassword "yuyinjisuanqi"
         }
-
         debug {
             storeFile file('yuyinjisuanqi')
             storePassword "yuyinjisuanqi"
@@ -39,9 +38,8 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            applicationIdSuffix '.debug'
+            //            applicationIdSuffix '.debug'
         }
-
         release {
             signingConfig signingConfigs.release
             minifyEnabled false

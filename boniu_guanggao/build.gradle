@@ -18,7 +18,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'http://nexus.rhinox.cn/repository/maven-public'}
+        maven { url 'http://nexus.rhinox.cn/repository/maven-public/'}
         
     }
 }

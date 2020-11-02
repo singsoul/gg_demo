@@ -30,6 +30,7 @@ import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -67,10 +68,10 @@ public class RewardAdManager {
     }
 
 
-    public void ShowSplashAd(Activity activity, RewardAdManagerListener listener) {
+    public void ShowSplashAd(Activity activity, RewardAdManagerListener listener,String adIdentity) {
         this.AdListener = listener;
         this.activity = activity;
-        List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> videoList = SplashSingleton.getInstance().getSplashList(1);
+        List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> videoList = SplashSingleton.getInstance().getSplashList(1,adIdentity);
         if (videoList == null || videoList.size() == 0){
             AdListener.rewardError(TextUtils.isEmpty(errorMsg)?"暂无激励视频":errorMsg);
             return;
@@ -203,6 +204,7 @@ public class RewardAdManager {
             @Override
             public void onError(AdError adError) {
                 errorMsg = adError.getErrorMsg();
+
                 SplashConfig.splashSave(gdt_app_id,gdt_pos_id,errorMsg,  adError.getErrorCode()+"","1");
 
                 showRewardad();
@@ -329,7 +331,9 @@ public class RewardAdManager {
                 SplashConfig.splashSave(ZHIKE_APP_ID,ZHIKE_POS_ID,errorMsg,  ConfigKeys.EMPTY_SPLASH+"","1");
                 showRewardad();
             }else{
-                MeterialBean meterialBean = list.get(0);
+
+                int i = new Random().nextInt(list.size() - 1);
+                MeterialBean meterialBean = list.get(i);
                 videoDialog = new VideoDialog(activity,meterialBean,AdListener);
                 videoDialog.setCanceledOnTouchOutside(false);
                 videoDialog.setCancelable(false);

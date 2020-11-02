@@ -30,11 +30,19 @@ public class AdvetisingInitBean {
          * list : [{"advertiseOrder":1,"advertiserName":"穿山甲","advertiserNo":"csj","advertisingSpaceId":"887305886","appId":"5054093","ifDirectCus":false},{"advertiseOrder":2,"advertiserName":"优量汇","advertiserNo":"ylh","advertisingSpaceId":"4021809880970678","appId":"1109946712","ifDirectCus":false},{"advertiseOrder":3,"advertiserName":"搏牛广告","advertiserNo":"bngg","advertisingSpaceId":"DCA874837419","appId":"DCM3284783","ifDirectCus":true}]
          * platform : ANDROID
          */
-
+        private String adIdentity;
         private String advertisingSpaceName;
         private int advertisingSpaceType;
         private String platform;
         private List<ListBean> list;
+
+        public String getAdIdentity() {
+            return adIdentity;
+        }
+
+        public void setAdIdentity(String adIdentity) {
+            this.adIdentity = adIdentity;
+        }
 
         public String getAdvertisingSpaceName() {
             return advertisingSpaceName;
@@ -83,7 +91,7 @@ public class AdvetisingInitBean {
             private String advertiserNo;
             private String advertisingSpaceId;
             private String appId;
-            private boolean ifDirectCus;
+            private boolean ifDirectCus;//是否直客
 
             public int getAdvertiseOrder() {
                 return advertiseOrder;

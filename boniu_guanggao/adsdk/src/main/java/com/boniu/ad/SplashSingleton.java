@@ -50,7 +50,14 @@ public class SplashSingleton {
 
 
     //获取各种类型广告列表
-    public List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> getSplashList(int type){
+
+    /**
+     *
+     * @param type  0是开屏，1是激励视频
+     * @param adIdentity  广告位
+     * @return
+     */
+    public List<AdvetisingInitBean.SdkAdverVOListBean.ListBean> getSplashList(int type,String adIdentity){
 
         if (advetisingInitBean == null){
             String splashJson = SPUtils.getInstance(context).getString(ConfigKeys.SPLASH_JSON);
@@ -83,7 +90,7 @@ public class SplashSingleton {
         if (list != null){
             for (int i = 0; i < list.size(); i++) {
                 AdvetisingInitBean.SdkAdverVOListBean advertisingBean = list.get(i);
-                if (type == advertisingBean.getAdvertisingSpaceType()){
+                if (type == advertisingBean.getAdvertisingSpaceType() && adIdentity.equals(advertisingBean.getAdIdentity())){
                     return advertisingBean.getList();
                 }
             }

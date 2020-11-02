@@ -25,8 +25,8 @@ public class MeterialBean {
     private String packageName;
     private List<String> lineMate;
     private List<String> rowMate;
-    private String vname;
-    private String vdesc;
+    private String vname = "";
+    private String vdesc = "";
 
     public String getVname() {
         return vname;
