@@ -117,7 +117,7 @@ public class VideoDialog extends Dialog {
                 imgVoice.setVisibility(View.GONE);
                 tvCountDown.setVisibility(View.GONE);
                 imgClose.setVisibility(View.VISIBLE);
-                adManagerListener.rewardVideAdComplete();
+                adManagerListener.rewardVideAdComplete("zhike");
                 isFinish = true;
 
             }

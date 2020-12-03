@@ -37,9 +37,10 @@ import static android.content.Context.MODE_PRIVATE;
 public class RewardAdManager {
     public static final String TAG = RewardAdManager.class.getSimpleName();
     public static final String SHOW_REWARDAD = "SHOW_REWARDAD";//显示广告类型  true gdt  false 穿山甲
-    public static final String ADNAME_GDT = "ADNAME_GDT";// 广点通
-    public static final String ADNAME_BU = "ADNAME_BU";// 穿山甲
-    public static final String ADNAME_ZHIKE = "ADNAME_ZHIKE";//直客
+    public static final String ADNAME_GDT = "ylh";// 广点通
+    public static final String ADNAME_CSJ = "csj";// 穿山甲
+    public static final String ADNAME_ZHIKE = "zhike";//直客
+    public static final String ADNAME_EMPTY = "empty";
     private String gdt_pos_id = "";
     private String gdt_app_id = "";
 
@@ -61,7 +62,7 @@ public class RewardAdManager {
     private String errorMsg = "";
 
     public interface RewardAdManagerListener {
-        void rewardVideAdComplete();
+        void rewardVideAdComplete(String type);
         void rewardVideAdClose();
 
         void rewardError(String msg);
@@ -86,7 +87,7 @@ public class RewardAdManager {
                 continue;
             }
             if ("csj".equals(listBean.getAdvertiserNo())){
-                this.adLists.add(ADNAME_BU);
+                this.adLists.add(ADNAME_CSJ);
                 csj_pos_id = listBean.getAdvertisingSpaceId();
             }
             if ("ylh".equals(listBean.getAdvertiserNo())){
@@ -112,7 +113,7 @@ public class RewardAdManager {
     }
 
     private void showRewardad() {
-        String lastAdName = sharedPreferences.getString(SHOW_REWARDAD, ADNAME_BU);
+        String lastAdName = sharedPreferences.getString(SHOW_REWARDAD, ADNAME_CSJ);
         Log.e(TAG, "showRewardad: " + lastAdName );
         // 数组为空 广告循环结束
         if (adLists == null || adLists.size() == 0) {
@@ -139,7 +140,7 @@ public class RewardAdManager {
             case ADNAME_GDT:
                 showGDTRewardVideoAd();
                 break;
-            case ADNAME_BU:
+            case ADNAME_CSJ:
                 showBURewardVideoAd();
                 break;
             case ADNAME_ZHIKE:
@@ -192,7 +193,7 @@ public class RewardAdManager {
                 // 播放完成
                 SplashConfig.splashSave(gdt_app_id,gdt_pos_id,"",  "","0");
 
-                AdListener.rewardVideAdComplete();
+                AdListener.rewardVideAdComplete(ADNAME_GDT);
             }
 
             @Override
@@ -204,7 +205,7 @@ public class RewardAdManager {
             @Override
             public void onError(AdError adError) {
                 errorMsg = adError.getErrorMsg();
-
+                Log.e(TAG, "onError: " + adError.getErrorMsg() + ": " + adError.getErrorCode() );
                 SplashConfig.splashSave(gdt_app_id,gdt_pos_id,errorMsg,  adError.getErrorCode()+"","1");
 
                 showRewardad();
@@ -221,6 +222,7 @@ public class RewardAdManager {
         AdSlot adSlot = new AdSlot.Builder()
                 .setCodeId(csj_pos_id)
                 .setSupportDeepLink(true)
+                .setExpressViewAcceptedSize(500,500)
                 .setImageAcceptedSize(1080, 1920)
                 .setOrientation(TTAdConstant.VERTICAL)
                 .build();
@@ -229,6 +231,7 @@ public class RewardAdManager {
             @Override
             public void onError(int i, String s) {
                 errorMsg = s;
+                Log.e(TAG, "onError: " + i + ":" + s );
                 SplashConfig.splashSave(csj_app_id,csj_pos_id,errorMsg,  i+"","1");
 
                 showRewardad();
@@ -289,7 +292,7 @@ public class RewardAdManager {
                     public void onVideoComplete() {
                         SplashConfig.splashSave(gdt_app_id,gdt_pos_id,"",  "","0");
 
-                        AdListener.rewardVideAdComplete();
+                        AdListener.rewardVideAdComplete(ADNAME_CSJ);
                     }
 
                     @Override

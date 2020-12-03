@@ -56,9 +56,10 @@ public class SplashAdManager {
 
     public static final String SHOW_SPLASHAD = "SHOW_SPLASHAD";//显示广告类型  true gdt  false 穿山甲
 
-    public static final String ADNAME_GDT = "ADNAME_GDT";// 广点通
-    public static final String ADNAME_BU = "ADNAME_BU";// 穿山甲
-    public static final String ADNAME_ZHIKE = "ADNAME_ZHIKE";//直客
+    public static final String ADNAME_YLH = "ylh";// 广点通
+    public static final String ADNAME_CSJ = "cjs";// 穿山甲
+    public static final String ADNAME_ZHIKE = "zhike";//直客
+    public static final String ADNAME_EMPTY = "empty";//暂无
 
     @Nullable
     private IStartNext startNext = null;
@@ -103,12 +104,12 @@ public class SplashAdManager {
                 continue;
             }
             if ("csj".equals(listBean.getAdvertiserNo())){
-                this.adLists.add(ADNAME_BU);
+                this.adLists.add(ADNAME_CSJ);
                 CSJ_APPID = listBean.getAppId();
                 CSJ_CODEID = listBean.getAdvertisingSpaceId();
             }
             if ("ylh".equals(listBean.getAdvertiserNo())){
-                this.adLists.add(ADNAME_GDT);
+                this.adLists.add(ADNAME_YLH);
                 GDT_APP_ID = listBean.getAppId();
                 GDT_POS_ID = listBean.getAdvertisingSpaceId();
             }
@@ -123,7 +124,7 @@ public class SplashAdManager {
     // 展示广告
     private void loadSplashAd() {
 
-        String lastAdName = sharedPreferences.getString(SHOW_SPLASHAD, ADNAME_BU);
+        String lastAdName = sharedPreferences.getString(SHOW_SPLASHAD, ADNAME_CSJ);
         Log.e(TAG, "loadSplashAd: " + lastAdName );
         // 数组为空 广告循环结束
         if (adLists == null || adLists.size() == 0) {
@@ -146,10 +147,10 @@ public class SplashAdManager {
 
         // 显示广告
         switch (lastAdName) {
-            case ADNAME_GDT:
+            case ADNAME_YLH:
                 loadGDTSplashAD();
                 break;
-            case ADNAME_BU:
+            case ADNAME_CSJ:
                 loadBUSplashAd();
                 break;
             case ADNAME_ZHIKE:
@@ -157,7 +158,7 @@ public class SplashAdManager {
                 loadZhiKeSplashAd();
                 break;
             default:
-                startNext.startNext();
+                startNext.startNext(ADNAME_EMPTY);
                 break;
         }
     }
@@ -228,7 +229,7 @@ public class SplashAdManager {
 
                     @Override
                     public void onAdSkip() {
-                        startNext.startNext();
+                        startNext.startNext(ADNAME_CSJ);
                         SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
 
                         //跳过
@@ -241,7 +242,7 @@ public class SplashAdManager {
 
                         Log.e(TAG, "onAdTimeOver: "  );
                         // 倒计时结束
-                        startNext.startNext();
+                        startNext.startNext(ADNAME_CSJ);
                     }
                 });
             }
@@ -257,7 +258,7 @@ public class SplashAdManager {
         gdtSplashAD = new SplashAD(activity, GDT_POS_ID, new SplashADListener() {
             @Override
             public void onADDismissed() {
-                startNext.startNext();
+                startNext.startNext(ADNAME_YLH);
                 SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"","","0");
 
             }
@@ -325,7 +326,7 @@ public class SplashAdManager {
                     public void onFinish() {
                         if (gotoNext){
                             SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
-                            startNext.startNext();
+                            startNext.startNext(ADNAME_ZHIKE);
                         }
                     }
                 };
@@ -364,7 +365,7 @@ public class SplashAdManager {
                             timer = null;
                         }
                         SplashConfig.splashSave(CSJ_APPID,CSJ_CODEID,"",  "","0");
-                        startNext.startNext();
+                        startNext.startNext(ADNAME_ZHIKE);
 
                     }
                 });
@@ -388,7 +389,7 @@ public class SplashAdManager {
 
     public interface IStartNext {
 
-        void startNext();
+        void startNext(String type);
 
         void onerror(String msg);
     }

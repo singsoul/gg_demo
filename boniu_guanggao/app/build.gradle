@@ -57,6 +57,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.boniu.ad:gdtsdk:4.251.1121@aar'
-    implementation 'com.boniu.ad:csjsdk:3.1.0.0@aar'
+    implementation 'com.boniu.ad:csjsdk:3.2.5.1@aar'
+//    implementation 'com.boniu.ad:adsdk:1.0.9@aar'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.0.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    api 'com.github.bumptech.glide:glide:4.10.0'
+
     implementation project(path: ':adsdk')
 }

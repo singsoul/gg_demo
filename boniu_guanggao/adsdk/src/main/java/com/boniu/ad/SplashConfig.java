@@ -56,43 +56,7 @@ public class SplashConfig {
             }
         }
         if (isHttp){
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("mediaId",packageNmae + "");
-            jsonObject.addProperty("platform","ANDROID");
-            String encrypt = AESUtil.encrypt(jsonObject.toString(), ConfigKeys.AES_KEY);
-            ApiManager.getInstance().create(AuthApi.class).getSplash(
-                    RequestBody.create(MediaType.parse("application/json; charset=utf-8"),encrypt+""))
-                    .enqueue(new XCallback<ResultBean>() {
-                        @Override
-                        public void onLoadSuccess(Call<ResultBean> call, ResultBean result) {
-                            String decrypt = AESUtil.decrypt(result.result, ConfigKeys.AES_KEY);
-                            Log.e(TAG, "onLoadSuccess: " + decrypt );
-                            SPUtils.getInstance(context).put(ConfigKeys.SPLASH_JSON,decrypt);
-                            AdvetisingInitBean advetisingInitBean = gson.fromJson(decrypt, AdvetisingInitBean.class);
-                            List<AdvetisingInitBean.SdkAppIdVOListBean> sdkAppIdVOList = advetisingInitBean.getSdkAppIdVOList();
-                            for (int i = 0; i < sdkAppIdVOList.size(); i++) {
-                                AdvetisingInitBean.SdkAppIdVOListBean sdkAppIdVOListBean = sdkAppIdVOList.get(i);
-                                if ("csj".equals(sdkAppIdVOListBean.getAdvertiserNo())){
-                                    if (sdkAppIdVOListBean.getAppIdList() != null && sdkAppIdVOListBean.getAppIdList().size() > 0){
-                                        TTAdManagerHolder.init(context,sdkAppIdVOListBean.getAppIdList().get(0));
-                                    }
-                                }else if ("ylh".equals(sdkAppIdVOListBean.getAdvertiserNo())){
-                                    if (sdkAppIdVOListBean.getAppIdList() != null && sdkAppIdVOListBean.getAppIdList().size() > 0){
-                                        GDTADManager.getInstance().initWith(context, sdkAppIdVOListBean.getAppIdList().get(0));
-
-                                    }
-                                }
-                            }
-                            SplashSingleton.getInstance().setAdvetisingInitBean(advetisingInitBean);
-                            SplashSingleton.getInstance().setInit(true);
-                            SPUtils.getInstance(context).put(ConfigKeys.SPLASH_TIME,DateUtils.getTypeTime());
-                        }
-                        @Override
-                        public void onLoadError(String errorMsg) {
-                            Log.e(TAG, "onLoadError: " + errorMsg );
-
-                        }
-                    });
+            getSplashHttp(packageNmae,context);
         }else{
             AdvetisingInitBean advetisingInitBean = gson.fromJson(splashJson, AdvetisingInitBean.class);
             List<AdvetisingInitBean.SdkAppIdVOListBean> sdkAppIdVOList = advetisingInitBean.getSdkAppIdVOList();
@@ -116,6 +80,45 @@ public class SplashConfig {
     }
 
 
+    public static void getSplashHttp(String packageNmae, final Context context){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("mediaId",packageNmae + "");
+        jsonObject.addProperty("platform","ANDROID");
+        String encrypt = AESUtil.encrypt(jsonObject.toString(), ConfigKeys.AES_KEY);
+        ApiManager.getInstance().create(AuthApi.class).getSplash(
+                RequestBody.create(MediaType.parse("application/json; charset=utf-8"),encrypt+""))
+                .enqueue(new XCallback<ResultBean>() {
+                    @Override
+                    public void onLoadSuccess(Call<ResultBean> call, ResultBean result) {
+                        String decrypt = AESUtil.decrypt(result.result, ConfigKeys.AES_KEY);
+                        Log.e(TAG, "onLoadSuccess: " + decrypt );
+                        SPUtils.getInstance(context).put(ConfigKeys.SPLASH_JSON,decrypt);
+                        AdvetisingInitBean advetisingInitBean = gson.fromJson(decrypt, AdvetisingInitBean.class);
+                        List<AdvetisingInitBean.SdkAppIdVOListBean> sdkAppIdVOList = advetisingInitBean.getSdkAppIdVOList();
+                        for (int i = 0; i < sdkAppIdVOList.size(); i++) {
+                            AdvetisingInitBean.SdkAppIdVOListBean sdkAppIdVOListBean = sdkAppIdVOList.get(i);
+                            if ("csj".equals(sdkAppIdVOListBean.getAdvertiserNo())){
+                                if (sdkAppIdVOListBean.getAppIdList() != null && sdkAppIdVOListBean.getAppIdList().size() > 0){
+                                    TTAdManagerHolder.init(context,sdkAppIdVOListBean.getAppIdList().get(0));
+                                }
+                            }else if ("ylh".equals(sdkAppIdVOListBean.getAdvertiserNo())){
+                                if (sdkAppIdVOListBean.getAppIdList() != null && sdkAppIdVOListBean.getAppIdList().size() > 0){
+                                    GDTADManager.getInstance().initWith(context, sdkAppIdVOListBean.getAppIdList().get(0));
+
+                                }
+                            }
+                        }
+                        SplashSingleton.getInstance().setAdvetisingInitBean(advetisingInitBean);
+                        SplashSingleton.getInstance().setInit(true);
+                        SPUtils.getInstance(context).put(ConfigKeys.SPLASH_TIME,DateUtils.getTypeTime());
+                    }
+                    @Override
+                    public void onLoadError(String errorMsg) {
+                        Log.e(TAG, "onLoadError: " + errorMsg );
+
+                    }
+                });
+    }
 
 
 

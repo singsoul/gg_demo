@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new RewardAdManager().ShowSplashAd(MainActivity.this,new RewardAdManager.RewardAdManagerListener() {
                     @Override
-                    public void rewardVideAdComplete() {
+                    public void rewardVideAdComplete(String type) {
                         //成功
                         Log.e(TAG, "rewardVideAdComplete: " );
                     }

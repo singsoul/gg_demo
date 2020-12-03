@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private SplashAdManager.IStartNext iStartNext = new SplashAdManager.IStartNext() {
         @Override
-        public void startNext() {
+        public void startNext(String type) {
             gotoNext();
         }
 

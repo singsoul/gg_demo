@@ -46,7 +46,11 @@ public class SplashSingleton {
         return instance;
     }
 
+    //是否初始化广告
+    public boolean getSplashInit(){
 
+        return isInit;
+    }
 
 
     //获取各种类型广告列表
@@ -62,6 +66,7 @@ public class SplashSingleton {
         if (advetisingInitBean == null){
             String splashJson = SPUtils.getInstance(context).getString(ConfigKeys.SPLASH_JSON);
             if (TextUtils.isEmpty(splashJson)){
+                SplashConfig.getSplashHttp(packageName,context);
                 return  null;
             }
             advetisingInitBean = gson.fromJson(splashJson, AdvetisingInitBean.class);
@@ -87,13 +92,15 @@ public class SplashSingleton {
             }
             isInit = true;
         }
-        if (list != null){
+        if (list != null && list.size() > 0){
             for (int i = 0; i < list.size(); i++) {
                 AdvetisingInitBean.SdkAdverVOListBean advertisingBean = list.get(i);
                 if (type == advertisingBean.getAdvertisingSpaceType() && adIdentity.equals(advertisingBean.getAdIdentity())){
                     return advertisingBean.getList();
                 }
             }
+        }else{
+            SplashConfig.getSplashHttp(packageName,context);
         }
 
         return null;
