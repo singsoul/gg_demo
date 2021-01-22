@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class ApiManager {
     private static final int READ_TIME_OUT = 30;
@@ -32,7 +32,7 @@ public class ApiManager {
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(AResultConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
     }
