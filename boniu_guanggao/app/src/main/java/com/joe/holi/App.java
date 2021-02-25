@@ -1,4 +1,4 @@
-package com.treefinance.gongfudai;
+package com.joe.holi;
 
 import android.app.Activity;
 import android.app.Application;
@@ -19,8 +19,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        SplashConfig.init(this,"com.sug3rs.manypaper","超级表情包");
-//        SplashConfig.init(app,"com.treefinance.gongfudai","计算器");
+        SplashConfig.init(this,"com.joe.holi","超级表情包");
+//        SplashConfig.init(app,"com.joe.holi","计算器");
 //        this.registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
 
     }

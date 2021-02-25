@@ -1,4 +1,4 @@
-package com.treefinance.gongfudai;
+package com.joe.holi;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.treefinance.gongfudai", appContext.getPackageName());
+        assertEquals("com.joe.holi", appContext.getPackageName());
     }
 }

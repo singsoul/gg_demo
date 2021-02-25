@@ -1,4 +1,4 @@
-package com.treefinance.gongfudai;
+package com.joe.holi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
         }else{
-            new SplashAdManager().ShowSplashAd(this,frameLayout,iStartNext,"9edf7f0485b94fbea8bfb01bafeaaf27");
+            new SplashAdManager().ShowSplashAd(this,frameLayout,iStartNext,"53d230df6a5e4a589f78c45d35eed0c0");
         }
     }
 
@@ -83,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
             lackedPermission.toArray(requestPermissions);
             requestPermissions(requestPermissions, 1024);
         } else {
-            new SplashAdManager().ShowSplashAd(this,frameLayout,iStartNext,"9edf7f0485b94fbea8bfb01bafeaaf27");
+            new SplashAdManager().ShowSplashAd(this,frameLayout,iStartNext,"53d230df6a5e4a589f78c45d35eed0c0");
         }
     }
 

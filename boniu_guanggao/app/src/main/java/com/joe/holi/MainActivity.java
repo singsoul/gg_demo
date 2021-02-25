@@ -1,4 +1,4 @@
-package com.treefinance.gongfudai;
+package com.joe.holi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         //错误
                         Log.e(TAG, "rewardError: " + msg);
                     }
-                },"7d27d0fb53134208b67400441e922ed7");
+                },"7f8f6c2a0ccf42f18b61bda324560ae9");
             }
         });
 
