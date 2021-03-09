@@ -20,16 +20,16 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('yuyinjisuanqi')
-            storePassword "yuyinjisuanqi"
-            keyAlias "yuyinjisuanqi"
-            keyPassword "yuyinjisuanqi"
+            keyAlias 'holi'
+            keyPassword '@%#$_0012kfSG'
+            storeFile file('joe_key_store.jks')
+            storePassword '@%#$_0012kfSG'
         }
         debug {
-            storeFile file('yuyinjisuanqi')
-            storePassword "yuyinjisuanqi"
-            keyAlias "yuyinjisuanqi"
-            keyPassword "yuyinjisuanqi"
+            keyAlias 'holi'
+            keyPassword '@%#$_0012kfSG'
+            storeFile file('joe_key_store.jks')
+            storePassword '@%#$_0012kfSG'
         }
     }
     buildTypes {
